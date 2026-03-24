@@ -2,31 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="shortcut icon" type="x-icon" href="https://files.catbox.moe/oifwcm.jpg">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EF-PRIME-MD | Connection Portal</title>
+  <title>Mercedes | Connection Portal</title>
+  <link rel="shortcut icon" type="x-icon" href="https://files.catbox.moe/oifwcm.jpg">
   <meta property="og:image" content="https://files.catbox.moe/oifwcm.jpg">
-  <meta property="og:title" content="EF-PRIME-MD connection methods">
+  <meta property="og:title" content="Mercedes Connection Portal">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
-    
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      --primary: #0cffe1;
-      --secondary: #00a6ff;
-      --accent: #ff00b3;
-      --dark: #0a0a14;
-      --darker: #050508;
-      --text: #e0e0ff;
+      --gold: #d4aa3c;
+      --gold-light: #f0d060;
+      --gold-dark: #c89820;
+      --dark: #0a0a0f;
+      --darker: #06060b;
+      --card: rgba(13,13,20,0.88);
+      --text: #e0e0f0;
+      --text-muted: #6b6b8a;
     }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+
     body {
       background: var(--darker);
       font-family: 'Rajdhani', sans-serif;
@@ -34,512 +30,249 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      position: relative;
+      justify-content: center;
       overflow-x: hidden;
+      position: relative;
     }
-    
-    .background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: linear-gradient(125deg, rgba(10,10,20,0.9) 0%, rgba(5,5,8,0.95) 100%);
-    }
-    
-    .grid {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        linear-gradient(rgba(12, 255, 225, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(12, 255, 225, 0.05) 1px, transparent 1px);
+
+    /* Grid background */
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(212,170,60,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,170,60,0.04) 1px, transparent 1px);
       background-size: 40px 40px;
-      z-index: -1;
+      pointer-events: none;
     }
-    
-    .container {
-      width: 90%;
-      max-width: 600px;
-      padding: 2rem;
-      background: rgba(10, 10, 20, 0.8);
-      backdrop-filter: blur(15px);
+
+    /* Radial glow */
+    .radial-glow {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(ellipse 80% 55% at 50% 25%, rgba(212,170,60,0.07) 0%, transparent 70%);
+    }
+
+    /* Particles */
+    .particle {
+      position: fixed; width: 3px; height: 3px;
+      background: rgba(212,170,60,0.5); border-radius: 50%;
+      pointer-events: none; z-index: 0;
+      animation: particleFloat linear infinite;
+    }
+    @keyframes particleFloat {
+      0%   { transform: translate(0,0);      opacity: 0.3; }
+      50%  { opacity: 0.7; }
+      100% { transform: translate(180px,-180px); opacity: 0.3; }
+    }
+
+    /* Card */
+    .card {
+      position: relative; z-index: 1;
+      width: min(92%, 480px);
+      background: var(--card);
+      border: 1px solid rgba(212,170,60,0.2);
       border-radius: 20px;
-      border: 1px solid rgba(12, 255, 225, 0.3);
-      box-shadow: 
-        0 0 40px rgba(12, 255, 225, 0.15),
-        0 0 100px rgba(0, 166, 255, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 40px rgba(212,170,60,0.07), 0 24px 64px rgba(0,0,0,0.55), inset 0 1px 0 rgba(212,170,60,0.1);
+      padding: 2.5rem 2rem;
       margin: 2rem 0;
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
-      transition: all 0.3s ease;
     }
-    
-    .container:hover {
-      border-color: rgba(12, 255, 225, 0.5);
-      box-shadow: 
-        0 0 50px rgba(12, 255, 225, 0.2),
-        0 0 120px rgba(0, 166, 255, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
+
+    /* Corner accents */
+    .card::before, .card::after,
+    .card-inner::before, .card-inner::after {
+      content: ''; position: absolute; width: 18px; height: 18px;
+      border-color: rgba(212,170,60,0.45);
     }
-    
-    .glow {
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(
-        circle at center,
-        rgba(12, 255, 225, 0.08) 0%,
-        rgba(0, 166, 255, 0.04) 30%,
-        transparent 70%
-      );
-      z-index: -1;
-      pointer-events: none;
-    }
-    
-    .logo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-    
-    .logo-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border-radius: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--dark);
-      position: relative;
-      overflow: hidden;
+    .card::before  { top:10px; left:10px;  border-top:2px solid; border-left:2px solid;  border-radius: 4px 0 0 0; }
+    .card::after   { top:10px; right:10px; border-top:2px solid; border-right:2px solid; border-radius: 0 4px 0 0; }
+    .card-inner::before { bottom:10px; left:10px;  border-bottom:2px solid; border-left:2px solid;  border-radius: 0 0 0 4px; }
+    .card-inner::after  { bottom:10px; right:10px; border-bottom:2px solid; border-right:2px solid; border-radius: 0 0 4px 0; }
+    .card-inner { position: relative; }
+
+    /* Logo */
+    .logo-wrap {
+      display: flex; flex-direction: column; align-items: center;
       margin-bottom: 1.5rem;
-      box-shadow: 
-        0 0 25px rgba(12, 255, 225, 0.4),
-        0 5px 15px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
     }
-    
-    .logo-icon:hover {
-      transform: scale(1.05);
-      box-shadow: 
-        0 0 35px rgba(12, 255, 225, 0.6),
-        0 8px 25px rgba(0, 0, 0, 0.4);
+    .logo-ring {
+      position: relative; width: 96px; height: 96px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
     }
-    
-    .logo-icon::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        to bottom right,
-        rgba(255, 255, 255, 0.3),
-        rgba(255, 255, 255, 0)
-      );
-      transform: rotate(45deg);
-      animation: shine 8s infinite;
+    .logo-ring::before {
+      content: '';
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 2px solid rgba(212,170,60,0.25);
+      animation: spinRing 20s linear infinite;
     }
-    
-    @keyframes shine {
-      0% {
-        top: -50%;
-        left: -50%;
-      }
-      25% {
-        top: -30%;
-        left: 150%;
-      }
-      100% {
-        top: -50%;
-        left: -50%;
-      }
+    @keyframes spinRing { to { transform: rotate(360deg); } }
+    .logo-ring::after {
+      content: '';
+      position: absolute; inset: -8px; border-radius: 50%;
+      border: 1px solid rgba(212,170,60,0.1);
+      animation: pingPulse 3s ease-in-out infinite;
     }
-    
-    .title {
-      font-family: 'Orbitron', sans-serif;
-      text-align: center;
-      position: relative;
-      margin-bottom: 0.5rem;
+    @keyframes pingPulse {
+      0%,100% { opacity: 0.3; transform: scale(1); }
+      50%      { opacity: 0.0; transform: scale(1.12); }
     }
-    
+    .logo-circle {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, #d4aa3c 0%, #f0d060 45%, #c89820 100%);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 28px rgba(212,170,60,0.5), 0 0 60px rgba(212,170,60,0.18), 0 6px 20px rgba(0,0,0,0.4);
+    }
+    .logo-circle svg { width: 54px; height: 54px; }
+
+    /* Gold shimmer text */
+    .gold-text {
+      background: linear-gradient(135deg, #d4aa3c 0%, #f0d060 30%, #c89820 60%, #e8c840 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 200% center; } }
+
+    .label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; color: rgba(212,170,60,0.55);
+      margin-bottom: 0.3rem;
+    }
     h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-      position: relative;
-      filter: drop-shadow(0 0 8px rgba(12, 255, 225, 0.3));
-      animation: glitch 3s infinite;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.4rem; font-weight: 900; letter-spacing: 0.06em;
+      line-height: 1; margin-bottom: 0.35rem;
     }
-    
-    h1::before {
-      content: "BY FRANK KAUMBA DEV";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--primary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      opacity: 0;
-      animation: glitchText 3s infinite;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    h1::after {
-      content: "EF-PRIME-MD-ULTRA";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      z-index: -1;
-    }
-    
-    @keyframes glitch {
-      0%, 70%, 100% {
-        transform: translate(0);
-        filter: drop-shadow(0 0 8px rgba(12, 255, 225, 0.3));
-      }
-      75% {
-        transform: translate(-2px, 2px);
-        filter: drop-shadow(0 0 15px rgba(255, 0, 179, 0.5)) hue-rotate(90deg);
-      }
-      80% {
-        transform: translate(2px, -2px);
-        filter: drop-shadow(0 0 15px rgba(0, 166, 255, 0.5)) hue-rotate(180deg);
-      }
-      85% {
-        transform: translate(-1px, 1px);
-        filter: drop-shadow(0 0 12px rgba(12, 255, 225, 0.4));
-      }
-    }
-    
-    @keyframes glitchText {
-      0%, 69%, 90%, 100% {
-        opacity: 0;
-        transform: translate(0);
-      }
-      70%, 89% {
-        opacity: 1;
-        transform: translate(1px, -1px);
-      }
-      75%, 85% {
-        opacity: 0.9;
-        transform: translate(-1px, 1px);
-      }
-    }
-    
     .subtitle {
-      font-size: 1.1rem;
-      font-weight: 300;
-      opacity: 0.8;
+      font-size: 0.9rem; color: var(--text-muted); letter-spacing: 0.04em;
       margin-bottom: 2rem;
-      text-align: center;
     }
-    
-    .buttons-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      width: 100%;
+
+    /* Info grid */
+    .info-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.65rem; margin-bottom: 1.8rem;
     }
-    
-    .button {
-      position: relative;
-      background: linear-gradient(135deg, rgba(10, 10, 20, 0.9), rgba(5, 5, 8, 0.95));
-      color: var(--text);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      padding: 0.9rem 1.5rem;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      overflow: hidden;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 
-        0 4px 15px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(12, 255, 225, 0.2);
+    .info-tile {
+      background: rgba(212,170,60,0.04);
+      border: 1px solid rgba(212,170,60,0.1);
+      border-radius: 14px; padding: 0.85rem;
     }
-    
-    .button::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, 
-                  transparent, 
-                  transparent,
-                  rgba(12, 255, 225, 0.1),
-                  rgba(12, 255, 225, 0.3),
-                  rgba(12, 255, 225, 0.1),
-                  transparent,
-                  transparent);
-      transform: translateX(-100%);
-      transition: all 0.6s ease;
+    .info-tile .icon { font-size: 1.2rem; margin-bottom: 0.3rem; }
+    .info-tile .key  { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text-muted); }
+    .info-tile .val  { font-size: 0.9rem; font-weight: 700; color: rgba(240,208,96,0.9); }
+
+    /* Feature rows */
+    .feature-list { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.8rem; }
+    .feature-row {
+      display: flex; align-items: center; gap: 0.85rem;
+      background: rgba(212,170,60,0.04); border: 1px solid rgba(212,170,60,0.1);
+      border-radius: 14px; padding: 0.8rem 1rem;
     }
-    
-    .button:hover {
-      background: linear-gradient(135deg, rgba(15, 15, 30, 0.9), rgba(10, 10, 16, 0.95));
-      box-shadow: 
-        0 6px 20px rgba(0, 0, 0, 0.4),
-        0 0 20px var(--primary),
-        0 0 40px rgba(12, 255, 225, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-      transform: translateY(-3px);
-      border-color: rgba(12, 255, 225, 0.4);
+    .feature-row .ficon { font-size: 1.4rem; flex-shrink: 0; }
+    .feature-row .ftitle { font-size: 0.95rem; font-weight: 700; color: rgba(240,208,96,0.9); }
+    .feature-row .fdesc  { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* Buttons */
+    .btn-primary, .btn-secondary {
+      display: block; width: 100%; padding: 1rem;
+      border-radius: 14px; font-family: 'Orbitron', sans-serif;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; text-align: center; text-decoration: none;
+      border: none; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    
-    .button:hover::before {
-      transform: translateX(100%);
+    .btn-primary {
+      background: linear-gradient(135deg, #d4aa3c 0%, #f0d060 50%, #c89820 100%);
+      color: #08080e;
+      box-shadow: 0 4px 20px rgba(212,170,60,0.32), 0 2px 6px rgba(0,0,0,0.3);
+      margin-bottom: 0.75rem;
     }
-    
-    .button:active {
-      transform: translateY(-1px);
+    .btn-secondary {
+      background: rgba(212,170,60,0.07);
+      border: 1px solid rgba(212,170,60,0.28);
+      color: #d4aa3c;
     }
-    
-    .button-icon {
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      filter: drop-shadow(0 0 4px currentColor);
-    }
-    
-    .footer {
-      margin-top: 2rem;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      opacity: 0.7;
-      width: 100%;
-    }
-    
-    .pulse {
-      animation: pulse 3s infinite;
-    }
-    
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 25px rgba(12, 255, 225, 0.4), 0 5px 15px rgba(0, 0, 0, 0.3);
-      }
-      50% {
-        box-shadow: 0 0 35px rgba(12, 255, 225, 0.6), 0 5px 15px rgba(0, 0, 0, 0.3);
-      }
-      100% {
-        box-shadow: 0 0 25px rgba(12, 255, 225, 0.4), 0 5px 15px rgba(0, 0, 0, 0.3);
-      }
-    }
-    
-    /* Decorative elements */
-    .corner {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border-color: var(--primary);
-      opacity: 0.6;
-      transition: opacity 0.3s ease;
-    }
-    
-    .container:hover .corner {
-      opacity: 1;
-    }
-    
-    .corner-top-left {
-      top: 10px;
-      left: 10px;
-      border-top: 2px solid;
-      border-left: 2px solid;
-    }
-    
-    .corner-top-right {
-      top: 10px;
-      right: 10px;
-      border-top: 2px solid;
-      border-right: 2px solid;
-    }
-    
-    .corner-bottom-left {
-      bottom: 10px;
-      left: 10px;
-      border-bottom: 2px solid;
-      border-left: 2px solid;
-    }
-    
-    .corner-bottom-right {
-      bottom: 10px;
-      right: 10px;
-      border-bottom: 2px solid;
-      border-right: 2px solid;
-    }
-    
-    /* Subtle floating dots */
-    .connection-dots {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-    }
-    
-    .dot {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: var(--primary);
-      border-radius: 50%;
-      opacity: 0.3;
-      animation: float 12s infinite alternate;
-    }
-    
-    .dot:nth-child(1) {
-      top: 20%;
-      left: 10%;
-      animation-delay: 0s;
-    }
-    
-    .dot:nth-child(2) {
-      top: 70%;
-      left: 20%;
-      animation-delay: 2s;
-    }
-    
-    .dot:nth-child(3) {
-      top: 30%;
-      left: 80%;
-      animation-delay: 4s;
-    }
-    
-    .dot:nth-child(4) {
-      top: 60%;
-      left: 90%;
-      animation-delay: 6s;
-    }
-    
-    @keyframes float {
-      0% {
-        transform: translate(0, 0);
-        opacity: 0.3;
-      }
-      100% {
-        transform: translate(15px, 15px);
-        opacity: 0.6;
-      }
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container {
-        width: 95%;
-        padding: 1.5rem;
-      }
-      
-      h1 {
-        font-size: 2rem;
-      }
-      
-      .logo-icon {
-        width: 70px;
-        height: 70px;
-        font-size: 2rem;
-      }
-    }
+    .btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,170,60,0.42); }
+    .btn-secondary:hover{ transform: translateY(-2px); background: rgba(212,170,60,0.12); }
+    .btn-primary:active, .btn-secondary:active { transform: translateY(0); }
+
+    /* Footer */
+    .footer { position: relative; z-index: 1; text-align: center; margin-top: 1.5rem; margin-bottom: 1rem; }
+    .footer .by { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.2rem; }
+    .footer .brand { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+
+    /* Fade in */
+    .fade-in { animation: fadeUp 0.6s ease-out both; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
   </style>
 </head>
 <body>
-  <div class="background"></div>
-  <div class="grid"></div>
-  
-  <div class="container">
-    <div class="glow"></div>
-    <div class="corner corner-top-left"></div>
-    <div class="corner corner-top-right"></div>
-    <div class="corner corner-bottom-left"></div>
-    <div class="corner corner-bottom-right"></div>
-    
-    <div class="connection-dots">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-    
-    <div class="logo">
-      <div class="logo-icon pulse">EF</div>
-    </div>
-    
-    <div class="title">
-      <h1>EF-PRIME-MD-ULTRA</h1>
-    </div>
-    <div class="subtitle">EF-PRIME-MD PAIR SITE</div>
-    
-    <div class="buttons-container">
-      <button onclick="location.href='/qr'" class="button">
-        <span class="button-icon">◉</span>
-        QR Connect
-      </button>
-      
-      <button onclick="location.href='/pair'" class="button">
-        <span class="button-icon">⬢</span>
-        Pair Device
-      </button>
-      
-      <button onclick="window.open('https://github.com/efkidgamerdev/')" class="button">
-        <span class="button-icon">⟐</span>
-        GitHub Repo
-      </button>
+
+  <div class="grid-bg"></div>
+  <div class="radial-glow"></div>
+
+  <!-- Particles -->
+  <div class="particle" style="top:14%;left:7%;animation-duration:22s;animation-delay:0s"></div>
+  <div class="particle" style="top:68%;left:13%;animation-duration:28s;animation-delay:3s"></div>
+  <div class="particle" style="top:38%;left:87%;animation-duration:20s;animation-delay:5s"></div>
+  <div class="particle" style="top:78%;left:90%;animation-duration:25s;animation-delay:1s"></div>
+  <div class="particle" style="top:8%;left:54%;animation-duration:32s;animation-delay:4s"></div>
+  <div class="particle" style="top:55%;left:2%;animation-duration:18s;animation-delay:2s"></div>
+
+  <div class="card fade-in">
+    <div class="card-inner">
+      <div class="logo-wrap">
+        <div class="logo-ring">
+          <div class="logo-circle">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="47" stroke="rgba(0,0,0,0.18)" stroke-width="2" fill="none"/>
+              <line x1="50" y1="5"  x2="50" y2="50" stroke="rgba(15,10,3,0.88)" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="50" y1="50" x2="7"  y2="74" stroke="rgba(15,10,3,0.88)" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="50" y1="50" x2="93" y2="74" stroke="rgba(15,10,3,0.88)" stroke-width="4.5" stroke-linecap="round"/>
+              <circle cx="50" cy="50" r="5" fill="rgba(15,10,3,0.88)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="label">Session Portal</div>
+        <h1 class="gold-text">MERCEDES</h1>
+        <p class="subtitle">WhatsApp Bot Connection Portal</p>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-tile"><div class="icon">🤖</div><div class="key">Bot Name</div><div class="val">Mercedes</div></div>
+        <div class="info-tile"><div class="icon">🔒</div><div class="key">Security</div><div class="val">Encrypted</div></div>
+        <div class="info-tile"><div class="icon">⚡</div><div class="key">Version</div><div class="val">V2 Ultra</div></div>
+        <div class="info-tile"><div class="icon">🌐</div><div class="key">Status</div><div class="val">Online</div></div>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-row">
+          <span class="ficon">🔑</span>
+          <div>
+            <div class="ftitle">Pair Code</div>
+            <div class="fdesc">Connect using an 8-digit pairing code</div>
+          </div>
+        </div>
+        <div class="feature-row">
+          <span class="ficon">📷</span>
+          <div>
+            <div class="ftitle">QR Code</div>
+            <div class="fdesc">Scan with WhatsApp to link your device</div>
+          </div>
+        </div>
+      </div>
+
+      <a href="/pair" class="btn-primary">⚡ Get Pair Code</a>
+      <a href="/qr"   class="btn-secondary">📷 Scan QR Code</a>
     </div>
   </div>
-  
-  <footer class="footer">
-    <p>© Frank Kaumba Dev | EF-PRIME-MD v1.0.2</p>
-  </footer>
+
+  <div class="footer fade-in" style="animation-delay:0.2s">
+    <p class="by">Powered by</p>
+    <p class="brand gold-text">Mercedes Bot System</p>
+  </div>
+
 </body>
-</html>
+  </html>

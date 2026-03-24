@@ -79,7 +79,7 @@ async function uploadToPastebin(input, title = 'Untitled', format = 'json', priv
 
             // Manipulate the URL: Remove 'https://pastebin.com/' and prepend custom words
             const pasteId = pasteUrl.replace('https://pastebin.com/', '');
-            const customUrl = `EF-PRIME-MD_${pasteId}`;
+            const customUrl = `Mercedes~${pasteId}`;
 
             console.log('Custom URL:', customUrl);
 

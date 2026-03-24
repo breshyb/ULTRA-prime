@@ -3,503 +3,395 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EF-PRIME-MD || PAIR CODE</title>
+  <title>Mercedes | Pair Code</title>
   <link rel="shortcut icon" type="x-icon" href="https://files.catbox.moe/oifwcm.jpg">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
-    
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      --primary: #0cffe1;
-      --secondary: #00a6ff;
-      --accent: #ff00b3;
-      --dark: #0a0a14;
-      --darker: #050508;
-      --text: #e0e0ff;
+      --gold: #d4aa3c;
+      --gold-light: #f0d060;
+      --gold-dark: #c89820;
+      --dark: #0a0a0f;
+      --darker: #06060b;
+      --card: rgba(13,13,20,0.92);
+      --text: #e0e0f0;
+      --text-muted: #6b6b8a;
     }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+
     body {
+      background: var(--darker);
       font-family: 'Rajdhani', sans-serif;
-      height: 100vh;
-      margin: 0;
-      background-color: var(--darker);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      background: radial-gradient(circle at center, rgba(0, 50, 80, 0.5) 0%, rgba(5, 5, 15, 0.95) 70%);
-    }
-    
-    .grid {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        linear-gradient(rgba(12, 255, 225, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(12, 255, 225, 0.05) 1px, transparent 1px);
-      background-size: 30px 30px;
-      z-index: -1;
-    }
-    
-    .container {
-      width: 100%;
+      color: var(--text);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 1;
-    }
-    
-    .logo {
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-    
-    .logo h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: 2px;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 10px rgba(12, 255, 225, 0.3);
-    }
-    
-    .logo p {
-      color: var(--text);
-      font-size: 1rem;
-      opacity: 0.8;
-    }
-    
-    .main {
-      width: 100%;
-      max-width: 400px;
-    }
-    
-    .box {
-      width: 100%;
-      padding: 2rem;
-      position: relative;
-      text-align: center;
-      background: rgba(10, 10, 20, 0.7);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(12, 255, 225, 0.2);
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-    
-    .box:hover {
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(12, 255, 225, 0.2);
-      transform: translateY(-5px);
-    }
-    
-    .glow {
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(
-        circle at center,
-        rgba(12, 255, 225, 0.1) 0%,
-        rgba(0, 166, 255, 0.05) 30%,
-        transparent 70%
-      );
-      z-index: -1;
-      pointer-events: none;
-    }
-    
-    #text {
-      color: var(--text);
-    }
-    
-    .centered-text {
-      color: var(--text);
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-    
-    h6 {
-      color: var(--text);
-      font-size: 1rem;
-      font-weight: 500;
-      margin-bottom: 1.5rem;
-      opacity: 0.8;
-    }
-    
-    .whatsapp {
-      color: #25D366;
-      font-style: normal;
-      font-weight: 600;
-    }
-    
-    .input-container {
-      display: flex;
-      width: 100%;
-      margin-bottom: 1.5rem;
-      gap: 0.5rem;
+      overflow-x: hidden;
       position: relative;
     }
-    
-    .input-container input {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(12, 255, 225, 0.3);
-      border-radius: 12px;
-      padding: 1rem;
-      color: var(--text);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1rem;
-      transition: all 0.3s ease;
+
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(212,170,60,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,170,60,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
     }
-    
-    .input-container input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 10px rgba(12, 255, 225, 0.4);
-      background: rgba(255, 255, 255, 0.15);
+    .radial-glow {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(ellipse 80% 55% at 50% 25%, rgba(212,170,60,0.06) 0%, transparent 70%);
     }
-    
-    .input-container input::placeholder {
-      color: rgba(224, 224, 255, 0.5);
-    }
-    
-    .input-container button {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border: none;
-      border-radius: 12px;
-      color: var(--dark);
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 600;
-      padding: 0 1.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      min-width: 80px;
-    }
-    
-    .input-container button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, 
-                  transparent, 
-                  rgba(255, 255, 255, 0.2), 
-                  transparent);
-      transition: all 0.5s ease;
-    }
-    
-    .input-container button:hover {
-      box-shadow: 0 0 15px rgba(12, 255, 225, 0.5);
-      transform: translateY(-2px);
-    }
-    
-    .input-container button:hover::before {
-      left: 100%;
-    }
-    
-    #pair {
-      min-height: 60px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    #copy {
-      cursor: pointer;
-      background: rgba(10, 10, 20, 0.7);
-      padding: 0.5rem 1.5rem;
-      border-radius: 10px;
-      border: 1px solid rgba(12, 255, 225, 0.3);
-      transition: all 0.3s ease;
-      display: inline-block;
-    }
-    
-    #copy:hover {
-      background: rgba(15, 15, 30, 0.8);
-      box-shadow: 0 0 15px rgba(12, 255, 225, 0.3);
-      transform: translateY(-2px);
-    }
-    
-    /* Corner decorations */
-    .corner {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border-color: var(--primary);
-      opacity: 0.8;
-    }
-    
-    .corner-top-left {
-      top: 10px;
-      left: 10px;
-      border-top: 2px solid;
-      border-left: 2px solid;
-    }
-    
-    .corner-top-right {
-      top: 10px;
-      right: 10px;
-      border-top: 2px solid;
-      border-right: 2px solid;
-    }
-    
-    .corner-bottom-left {
-      bottom: 10px;
-      left: 10px;
-      border-bottom: 2px solid;
-      border-left: 2px solid;
-    }
-    
-    .corner-bottom-right {
-      bottom: 10px;
-      right: 10px;
-      border-bottom: 2px solid;
-      border-right: 2px solid;
-    }
-    
-    /* Animated background elements */
-    .particles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: -1;
-    }
-    
     .particle {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: var(--primary);
-      border-radius: 50%;
-      opacity: 0.3;
-      animation: float 15s infinite linear;
+      position: fixed; width: 3px; height: 3px;
+      background: rgba(212,170,60,0.5); border-radius: 50%;
+      pointer-events: none; z-index: 0;
+      animation: particleFloat linear infinite;
     }
-    
-    .particle:nth-child(1) {
-      top: 20%;
-      left: 10%;
-      animation-duration: 20s;
+    @keyframes particleFloat {
+      0%   { transform: translate(0,0);         opacity: 0.3; }
+      50%  { opacity: 0.7; }
+      100% { transform: translate(180px,-180px); opacity: 0.3; }
     }
-    
-    .particle:nth-child(2) {
-      top: 70%;
-      left: 20%;
-      animation-duration: 25s;
-      animation-delay: 2s;
+
+    /* Back link */
+    .back-link {
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.85rem; color: var(--text-muted); text-decoration: none;
+      margin-bottom: 1.2rem; align-self: flex-start;
+      margin-left: calc((100% - min(92%,460px)) / 2);
+      transition: color 0.2s;
     }
-    
-    .particle:nth-child(3) {
-      top: 30%;
-      left: 80%;
-      animation-duration: 18s;
-      animation-delay: 4s;
+    .back-link:hover { color: var(--gold); }
+    .back-arrow { transition: transform 0.2s; }
+    .back-link:hover .back-arrow { transform: translateX(-3px); }
+
+    /* Card */
+    .card {
+      position: relative; z-index: 1;
+      width: min(92%, 460px);
+      background: var(--card);
+      border: 1px solid rgba(212,170,60,0.2);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 40px rgba(212,170,60,0.07), 0 24px 64px rgba(0,0,0,0.6), inset 0 1px 0 rgba(212,170,60,0.1);
+      padding: 2rem 1.8rem;
     }
-    
-    .particle:nth-child(4) {
-      top: 60%;
-      left: 90%;
-      animation-duration: 22s;
-      animation-delay: 1s;
+    .card::before, .card::after,
+    .card-inner::before, .card-inner::after {
+      content: ''; position: absolute; width: 16px; height: 16px;
+      border-color: rgba(212,170,60,0.4);
     }
-    
-    .particle:nth-child(5) {
-      top: 10%;
-      left: 50%;
-      animation-duration: 28s;
-      animation-delay: 3s;
+    .card::before  { top:10px; left:10px;  border-top:2px solid; border-left:2px solid;  border-radius:4px 0 0 0; }
+    .card::after   { top:10px; right:10px; border-top:2px solid; border-right:2px solid; border-radius:0 4px 0 0; }
+    .card-inner::before { bottom:10px; left:10px;  border-bottom:2px solid; border-left:2px solid;  border-radius:0 0 0 4px; }
+    .card-inner::after  { bottom:10px; right:10px; border-bottom:2px solid; border-right:2px solid; border-radius:0 0 4px 0; }
+    .card-inner { position: relative; }
+
+    /* Header row */
+    .header-row {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.6rem;
     }
-    
-    @keyframes float {
-      0% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 0.3;
-      }
-      50% {
-        opacity: 0.8;
-      }
-      100% {
-        transform: translate(200px, 200px) rotate(360deg);
-        opacity: 0.3;
-      }
+    .logo-small {
+      width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%;
+      background: linear-gradient(135deg, #d4aa3c 0%, #f0d060 50%, #c89820 100%);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 14px rgba(212,170,60,0.42);
     }
-    
-    .footer {
-      position: fixed;
-      bottom: 20px;
-      left: 0;
-      width: 100%;
+    .logo-small svg { width: 32px; height: 32px; }
+    .header-titles h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.15rem; font-weight: 900; letter-spacing: 0.06em;
+    }
+    .header-titles .sub {
+      font-size: 0.68rem; text-transform: uppercase;
+      letter-spacing: 0.2em; color: var(--text-muted);
+    }
+
+    /* Gold shimmer */
+    .gold-text {
+      background: linear-gradient(135deg, #d4aa3c 0%, #f0d060 30%, #c89820 60%, #e8c840 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer { to { background-position: 200% center; } }
+
+    /* Info box */
+    .info-box {
+      background: rgba(212,170,60,0.04);
+      border: 1px solid rgba(212,170,60,0.1);
+      border-radius: 14px; padding: 0.9rem 1rem;
+      font-size: 0.9rem; color: #c8c8e0; line-height: 1.5;
+      margin-bottom: 1.4rem;
+    }
+    .info-box .green { color: #4ade80; font-weight: 700; }
+
+    /* Phone input row */
+    .field-label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--text-muted);
+      display: block; margin-bottom: 0.55rem;
+    }
+    .input-row { display: flex; gap: 0.6rem; margin-bottom: 1rem; }
+    .phone-input {
+      flex: 1; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212,170,60,0.2); border-radius: 12px;
+      padding: 0.85rem 1rem; color: var(--text);
+      font-family: 'Rajdhani', sans-serif; font-size: 1rem;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .phone-input::placeholder { color: rgba(107,107,138,0.7); }
+    .phone-input:focus {
+      border-color: rgba(212,170,60,0.5);
+      box-shadow: 0 0 0 3px rgba(212,170,60,0.1);
+    }
+    .phone-input.err { border-color: rgba(220,60,60,0.55); }
+    .phone-input.ok  { border-color: rgba(74,222,128,0.45); }
+
+    .get-btn {
+      background: linear-gradient(135deg, #d4aa3c 0%, #f0d060 50%, #c89820 100%);
+      color: #08080e; border: none; border-radius: 12px; cursor: pointer;
+      font-family: 'Orbitron', sans-serif; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; padding: 0 1.4rem;
+      min-width: 90px; white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(212,170,60,0.3);
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    }
+    .get-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(212,170,60,0.44); }
+    .get-btn:active:not(:disabled) { transform: translateY(0); }
+    .get-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    /* Status areas */
+    #status-area { min-height: 20px; }
+
+    .status-box {
+      border-radius: 14px; padding: 1rem;
+      font-size: 0.88rem; line-height: 1.5;
+      margin-bottom: 0.5rem;
+    }
+    .status-loading {
+      background: rgba(212,170,60,0.05);
+      border: 1px solid rgba(212,170,60,0.15);
+      display: flex; align-items: center; gap: 0.7rem; color: var(--gold);
+      font-weight: 600;
+    }
+    .status-error {
+      background: rgba(220,60,60,0.07);
+      border: 1px solid rgba(220,60,60,0.22);
+      color: #f87171;
+    }
+    .status-success {
+      background: rgba(212,170,60,0.05);
+      border: 1px solid rgba(212,170,60,0.22);
       text-align: center;
-      color: var(--text);
-      opacity: 0.7;
-      font-size: 0.9rem;
     }
-    
-    @media (max-width: 500px) {
-      .box {
-        width: 90%;
-        padding: 1.5rem;
-      }
-      
-      .input-container {
-        flex-direction: column;
-      }
-      
-      .input-container input {
-        width: 100%;
-        margin-bottom: 0.5rem;
-      }
-      
-      .input-container button {
-        width: 100%;
-        padding: 0.8rem;
-      }
-      
-      .logo h1 {
-        font-size: 1.8rem;
-      }
+    .status-idle {
+      background: rgba(212,170,60,0.02);
+      border: 1px dashed rgba(212,170,60,0.1);
+      color: var(--text-muted); text-align: center; font-size: 0.82rem;
     }
+
+    .code-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--text-muted); margin-bottom: 0.7rem; }
+    .code-value {
+      font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900;
+      letter-spacing: 0.28em; margin-bottom: 0.9rem;
+    }
+    .copy-btn {
+      background: rgba(212,170,60,0.1); border: 1px solid rgba(212,170,60,0.22);
+      color: var(--gold); border-radius: 10px; padding: 0.4rem 1.2rem;
+      font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .copy-btn:hover  { background: rgba(212,170,60,0.18); }
+    .copy-btn:active { transform: scale(0.96); }
+    .copy-btn.copied { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.3); color: #4ade80; }
+
+    .how-to {
+      background: rgba(74,222,128,0.05);
+      border: 1px solid rgba(74,222,128,0.15);
+      border-radius: 12px; padding: 0.8rem 1rem;
+      font-size: 0.78rem; color: #9ca3af; line-height: 1.55;
+      margin-top: 0.75rem;
+    }
+    .how-to .hl { color: #4ade80; font-weight: 700; }
+
+    /* Spinner */
+    .spinner {
+      width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+      border: 2px solid rgba(212,170,60,0.25);
+      border-top-color: var(--gold);
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Footer notes */
+    .notes { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.55rem; }
+    .note {
+      display: flex; align-items: flex-start; gap: 0.7rem;
+      background: rgba(212,170,60,0.03); border: 1px solid rgba(212,170,60,0.08);
+      border-radius: 12px; padding: 0.75rem 0.9rem;
+      font-size: 0.78rem; color: var(--text-muted); line-height: 1.5;
+    }
+    .note .ni { flex-shrink: 0; margin-top: 1px; }
+    .note .nh { color: rgba(240,208,96,0.75); font-weight: 700; display: block; }
+    .note em { font-style: italic; }
+
+    /* Footer */
+    .footer { position: relative; z-index: 1; text-align: center; margin: 1.4rem 0 0.5rem; }
+    .footer .by { font-size: 0.7rem; color: var(--text-muted); }
+    .footer .brand { font-family: 'Orbitron', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
+
+    .fade-in { animation: fadeUp 0.55s ease-out both; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
   </style>
 </head>
 <body>
-  <div class="background"></div>
-  <div class="grid"></div>
-  
-  <div class="particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-  </div>
-  
-  <div class="container">
-    <div class="logo">
-      <h1>EF-PRIME-MD</h1>
-      <p>Advanced WhatsApp Connection</p>
-    </div>
-    
-    <div class="main">
-      <div class="box" id="box">
-        <div class="glow"></div>
-        <div class="corner corner-top-left"></div>
-        <div class="corner corner-top-right"></div>
-        <div class="corner corner-bottom-left"></div>
-        <div class="corner corner-bottom-right"></div>
-        
-        <div id="text">
-          <h3 class="centered-text">Link with your <i class="fa-brands fa-whatsapp whatsapp"></i> WhatsApp</h3>
-          
-          <h6>Enter your WhatsApp number with country code to generate a pairing code</h6>
-          
-          <div class="input-container">
-            <input placeholder="+265993xxxxxxx" type="number" id="number">
-            <button id="submit">CONNECT</button>
-          </div>
-          
-          <a id="waiting-message" class="centered-text" style="display: none;">Generating pairing code...</a>
-          
-          <main id="pair"></main>
+
+  <div class="grid-bg"></div>
+  <div class="radial-glow"></div>
+  <div class="particle" style="top:18%;left:4%;animation-duration:22s;animation-delay:0s"></div>
+  <div class="particle" style="top:72%;left:92%;animation-duration:28s;animation-delay:3s"></div>
+  <div class="particle" style="top:42%;left:96%;animation-duration:20s;animation-delay:5s"></div>
+
+  <a href="/" class="back-link fade-in">
+    <span class="back-arrow">←</span> Back to Portal
+  </a>
+
+  <div class="card fade-in" style="animation-delay:0.05s">
+    <div class="card-inner">
+
+      <div class="header-row">
+        <div class="logo-small">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="50" y1="5"  x2="50" y2="50" stroke="rgba(15,10,3,0.88)" stroke-width="5.5" stroke-linecap="round"/>
+            <line x1="50" y1="50" x2="7"  y2="74" stroke="rgba(15,10,3,0.88)" stroke-width="5.5" stroke-linecap="round"/>
+            <line x1="50" y1="50" x2="93" y2="74" stroke="rgba(15,10,3,0.88)" stroke-width="5.5" stroke-linecap="round"/>
+            <circle cx="50" cy="50" r="5.5" fill="rgba(15,10,3,0.88)"/>
+          </svg>
+        </div>
+        <div class="header-titles">
+          <h2 class="gold-text">MERCEDES</h2>
+          <div class="sub">Pair Code Generator</div>
         </div>
       </div>
+
+      <div class="info-box">
+        Enter your <span class="green">WhatsApp number</span> with country code to receive an 8-digit pairing code.
+      </div>
+
+      <label class="field-label">Phone Number</label>
+      <div class="input-row">
+        <input id="phone" class="phone-input" type="tel" placeholder="e.g. 27XXXXXXXXX" autocomplete="tel">
+        <button id="get-btn" class="get-btn">Get Code</button>
+      </div>
+
+      <div id="status-area">
+        <div class="status-box status-idle">Your pair code will appear here after you enter your number</div>
+      </div>
+
+      <div class="notes">
+        <div class="note">
+          <span class="ni">🔒</span>
+          <span>Your session is end-to-end encrypted and secured by Mercedes Bot System V2.</span>
+        </div>
+        <div class="note">
+          <span class="ni">✅</span>
+          <div>
+            <span class="nh">Thank you for choosing <em>Mercedes</em>!</span>
+            Your session will be active and secured once connected.
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-  
-  <div class="footer">
-    <p>© Frank Kaumba Dev | EF-PRIME-MD v1.0.2</p>
-  </div>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
-  <script>
-    let a = document.getElementById("pair");
-    let b = document.getElementById("submit");
-    let c = document.getElementById("number");
-    let box = document.getElementById("box");
-    let waitingMessage = document.getElementById("waiting-message");
 
-    async function Copy() {
-      let text = document.getElementById("copy").innerText;
-      let obj = document.getElementById("copy");
-      await navigator.clipboard.writeText(obj.innerText.replace('CODE: ', ''));
-      obj.innerText = "✓ COPIED";
-      obj.style = "color: var(--primary); font-weight: bold;";
-      setTimeout(() => {
-        obj.innerText = text;
-        obj.style = "";
-      }, 1000);
+  <div class="footer fade-in" style="animation-delay:0.15s">
+    <p class="by">Powered by</p>
+    <p class="brand gold-text">Mercedes Bot System</p>
+  </div>
+
+  <script>
+    const phoneInput = document.getElementById('phone');
+    const getBtn     = document.getElementById('get-btn');
+    const statusArea = document.getElementById('status-area');
+
+    function setIdle() {
+      statusArea.innerHTML = '<div class="status-box status-idle">Your pair code will appear here after you enter your number</div>';
+    }
+    function setLoading() {
+      statusArea.innerHTML = '<div class="status-box status-loading"><div class="spinner"></div><span>Generating your pair code…</span></div>';
+    }
+    function setError(msg) {
+      statusArea.innerHTML = `<div class="status-box status-error">⚠ ${msg}</div>`;
+    }
+    function setCode(code) {
+      statusArea.innerHTML = `
+        <div class="status-box status-success">
+          <div class="code-label">Your Pair Code</div>
+          <div class="code-value gold-text" id="code-display">${code}</div>
+          <button class="copy-btn" id="copy-btn" onclick="copyCode('${code}')">Copy Code</button>
+          <div class="how-to">
+            <span class="hl">How to use:</span> Open WhatsApp → Linked Devices → Link a Device → enter this code to connect Mercedes
+          </div>
+        </div>`;
     }
 
-    b.addEventListener("click", async (e) => {
-      e.preventDefault();
-      if (!c.value) {
-        a.innerHTML = '<a style="color: var(--accent); font-weight: bold">Please enter your WhatsApp number with a country code</a>';
-      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
-        a.innerHTML = '<a style="color: var(--accent); font-weight: bold">Invalid number format. Please check and try again</a>';
-      } else {
-        waitingMessage.style.display = "block";
-        const phoneNumber = c.value.replace(/[^0-9]/g, "");
-        let formattedNumber = "";
-        let tempNumber = "";
-        const digits = phoneNumber.split('');
-        
-        digits.map(digit => {
-          tempNumber += digit;
-          if (tempNumber.length == 3) {
-            formattedNumber += " " + digit;
-          } else if (tempNumber.length == 8) {
-            formattedNumber += " " + digit;
-          } else {
-            formattedNumber += digit;
-          }
-        });
-        
-        c.type = "text";
-        c.value = "+" + formattedNumber;
-        c.style = "color: var(--primary); font-size: 18px; font-weight: 500;";
-        
-        try {
-          let { data } = await axios(`/code?number=${phoneNumber}`);
-          waitingMessage.style.display = "none";
-          let code = data.code || "Service Unavailable";
-          a.innerHTML = '<div id="copy" onclick="Copy()" style="font-weight: bold; font-size: 1.2rem; margin-top: 1rem;">CODE: <span style="color: var(--primary); font-weight: bold">' + code + '</span></div><p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">(Click to copy)</p>';
-        } catch (error) {
-          waitingMessage.style.display = "none";
-          a.innerHTML = '<a style="color: var(--accent); font-weight: bold">Connection error. Please try again later.</a>';
-        }
+    function copyCode(code) {
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById('copy-btn');
+        if (!btn) return;
+        btn.textContent = '✓ Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy Code'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+
+    phoneInput.addEventListener('keydown', e => { if (e.key === 'Enter') getBtn.click(); });
+    phoneInput.addEventListener('input', () => {
+      phoneInput.classList.remove('err', 'ok');
+      setIdle();
+    });
+
+    getBtn.addEventListener('click', async () => {
+      const raw = phoneInput.value;
+      const cleaned = raw.replace(/[^0-9]/g, '');
+
+      if (!cleaned) {
+        phoneInput.classList.add('err');
+        setError('Please enter your WhatsApp number with country code.');
+        return;
+      }
+      if (cleaned.length < 10) {
+        phoneInput.classList.add('err');
+        setError('Invalid number format. Please include the country code (e.g. 27XXXXXXXXX).');
+        return;
+      }
+
+      phoneInput.classList.remove('err');
+      phoneInput.classList.add('ok');
+      phoneInput.disabled = true;
+      getBtn.disabled = true;
+      setLoading();
+
+      try {
+        const { data } = await axios.get(`/code?number=${cleaned}`);
+        const code = data.code || 'Service Unavailable';
+        setCode(code);
+      } catch (err) {
+        setError('Connection error. Please check your number and try again.');
+        phoneInput.classList.remove('ok');
+        phoneInput.classList.add('err');
+      } finally {
+        phoneInput.disabled = false;
+        getBtn.disabled = false;
       }
     });
   </script>

@@ -5,15 +5,9 @@ let router = express.Router();
 const pino = require("pino");
 const { Boom } = require("@hapi/boom");
 const MESSAGE = process.env.MESSAGE || `
-🚀 *_EF-PRIME-MD-ULTRA Session Activated_* 💻
+🚀 *_Session Activated_* 
 
-╭─❒ *🎉 SESSION INFO* ❒
-├⬡ 🆔 Session ID successfully generated!
-├⬡ 🤖 Bot: EF-PRIME-MD-ULTRA V2
-├⬡ 😎 Welcome to the next-gen experience!
-╰────────────❒
-
-> ✅ Thank you for choosing *EF-PRIME-MD V2*!
+> ✅ Thank you for choosing *Mercedes*!
 > 🔒 Your session is now active and secured`;
 
 const uploadToPastebin = require('./Paste');  // Assuming you have a function to upload to Pastebin
